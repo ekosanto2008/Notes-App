@@ -49,16 +49,10 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, intentData)
 
         if (requestCode == newNoteActivityRequestCode && resultCode == Activity.RESULT_OK) {
-                val note = intentData?.getStringExtra(NewNote.EXTRA_TITLE)?.let {
-                    Note(
-                        it,
-                        intentData.getStringExtra(NewNote.EXTRA_DESC)!!
-                    )
-                }
-            if (note != null) {
-                noteViewModel.insert(note)
-            }
-
+            val title = intentData?.getStringExtra(NewNote.EXTRA_TITLE)
+            val desc = intentData?.getStringExtra(NewNote.EXTRA_DESC)
+            val note = Note(title ?: "", desc ?: "")
+            noteViewModel.insert(note)
         } else {
             Toast.makeText(
                 applicationContext,
